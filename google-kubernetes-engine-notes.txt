@@ -1,0 +1,76 @@
+# Connect to GCP cluster
+> gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1 --project dynamic-bongo-363921
+
+# Create Deployment 
+------------------------------------------------------------------------
+> kubectl create deployment currency-exchange --image=devbith/spring-microservice-currency-exchange-service:0.0.1-SNAPSHOT  
+> kubectl create deployment currency-conversion --image=devbith/spring-microservice-currency-conversion-service:0.0.1-SNAPSHOT  
+
+
+------------------------------------------------------------------------
+# Expose Service 
+> kubectl expose deployment currency-exchange --type=LoadBalancer --port=8000
+> kubectl expose deployment currency-conversion --type=LoadBalancer --port=8100
+
+
+------------------------------------------------------------------------
+# Delete All Deployment [ Pods, Service etc ]
+> kubectl delete all -l app=currency-exchange
+> kubectl delete all -l app=currency-conversion
+
+  Above commands deletes pods, service and replicas
+
+------------------------------------------------------------------------
+# Save Deployment In YAML File
+> kubectl get deployments currency-exchange -o yaml >> currency-exchange-deployment.yaml
+
+
+------------------------------------------------------------------------
+# Apply YAML deployment description
+> kubectl apply -f deployment.yaml
+
+
+------------------------------------------------------------------------
+# How to scale deployment manually
+> kubectl scale deployment currency-exchange âreplicas=2
+
+With the above approach we need to monitor the load and scale up the deployment manually which is not good
+
+------------------------------------------------------------------------
+# How to scale deployment as per the load
+> kubectl autoscale deployment currency-exchange --min=1 --max=3 --cpu-percent=70
+
+With the above command, we are letting Kubernetes to decide to scale up deployment to maximum 3 when the 
+cpu load in above 70 percent 
+
+
+------------------------------------------------------------------------
+# How to open shell of the running container in k8s
+> kubectl exec -it currency-exchange-6669747f68-rl2mq -- sh   
+
+where,
+currency-exchange-6669747f68-rl2mq = pod name
+
+
+------------------------------------------------------------------------
+# How to view logs deployed application inside the pod
+> kubectl logs currency-exchange-6669747f68-rl2mq
+
+To watch the log continuously
+> kubectl logs -f currency-exchange-6669747f68-rl2mq
+
+
+------------------------------------------------------------------------
+# View history of the deployment
+> kubectl rollout history deployment currency-conversion
+
+
+------------------------------------------------------------------------
+# Kubernetes  Avoid  down time (readiness and liveness)
+- Kubernetes uses probes to check the health of a micro service
+  • If readiness probe is not successful, no traffic is sent
+  • If liveness probe is not successful, pod is restarted
+
+- Spring Boot Actuator ( >=2.3) provides inbuilt readiness and liveness probes
+   /health/readiness     
+   /health/liveness

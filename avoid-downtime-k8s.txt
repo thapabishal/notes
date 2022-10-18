@@ -1,0 +1,9 @@
+Kubernetes - Liveness and Readiness
+
+Kubernetes uses probes to check the health of a micro service
+ • If readiness probe is not successful, no traffic is sent
+ • If liveness probe is not successful, pod is restarted
+
+Spring Boot Actuator (>=2.3) provides inbuilt readiness and liveness probes
+ • /health/readiness     
+ • /health/liveness

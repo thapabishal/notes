@@ -1,0 +1,38 @@
+### Docker
+Docker is a container management tool. It helps to pack application and all its dependencis together.
+It makes a easy and efficient containrized deployments. 
+
+### Hypervisor
+A hypervisor is a sfotware that makes virtualization possible. It divided the host system and allocates the resouces to each divided virtual environment.
+Basically it makes it possible to run multiple OS on a single host system. 
+
+There are two types of hypervisor:
+- Type 1 Hypervisor (Native/Bare Metal Hypervisor)
+  It runs directly in the underlying hardware. It does not require base operating system. This is used in producation.
+
+- Type 2 Hypervisor (Hosted Hypervisor)
+  This hypervisor is installed on the top of host operating system. It is also called hosted hypervisor
+
+### Virtualization
+Virtualization is the process of creating a software based, virtual version of something like network resource, storage resourece or computing resource.
+Virtulization lets split one system into many different section which act like separate individual systems.
+
+### Containerization
+Containerization is packing software code with all it's necessary components like libraries, framework together in a isolation.
+Container is fully packed and portable. 
+
+### Difference between virtualization and containerization
+Containers provide an isolated environment for running the application. The entire user space is explicitly dedicated to the application. 
+Any changes made inside the container is never reflected on the host or even other containers running on the same host.
+Containers are an abstraction of the application layer. Each container is a different application.
+
+Whereas in Virtualization, hypervisors provide an entire virtual machine to the guest(including Kernal).
+ Virtual machines are an abstraction of the hardware layer. Each VM is a physical machine.
+
+
+
+
+
+
+
+
