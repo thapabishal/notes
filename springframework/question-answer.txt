@@ -1,0 +1,140 @@
+﻿# What is spring framework?
+  
+  It is the lightweight, loosely coupled layered framework created to address the complexity of the enterprise application development.
+  
+  Springframework is layer architecure, we can be selective about which component to use.
+
+
+# List the advantage of Spring framework
+  
+  • Layer architecure ( architecure in which layer communicates to other - above or below hierarchical order )
+    which makes it flexible to integrate different component.
+  • Dependency Injection and Inversion of Control (IoC Container - BeanFactory, ApplicationContext)
+  • Well designed, consistant and open-source framework
+
+
+# Important feature of Spring framework
+
+  • Lighweight
+  • Aspect-Oriented Programming (AOP)
+  • Inversion of Control
+
+
+
+
+# Why Spring framework is called lightweight framework ?
+  
+  Reason for "light-weight" is Spring comes with modular approach.  For example, since you can use Spring JDBC without using Sping MVC spring call itself lightweight.
+  Also compared to traditional Java EE where application used to be deployed to heavyweight applicaton servcers (Websphere, Weblogic etc) whereas Spring could be 
+  deployed to lighwegiht container like Tomcat or Jetty. Also respect to its size and functionality it is light-wight.
+  
+
+
+# What is Aspect Oriented Programming (AOP)?
+
+  * AOP breaks the program logic into seprate parts called concern and these concern are conceptually separate from application's business logic. 
+  * Logging, Transaction Management, Security etc are the cross cutting concern of enterprise application.
+  * The key unit of modularity in OPP is class, whereas in AOP the unit of modularity is the aspect. Dependency injection decouples our application objects 
+    from each other and AOP allows you to decouple the cross-cutting concern from the objects that they affect in the development process. 
+  * AOP adds extra behavior to existing code without modifing it.
+
+  
+
+
+# What is Inversion of Control? Feature of Spring IoC?
+ 
+  Spring IoC creates object, confiures and assemble dependencies, managed bean life cycle and container uses Dependency Injection (DI) to manage the 
+  component. Spring IoC gets information about objects from configuration file (XML) or Java Code or Java Annotation. 
+  * Since controlling of Java (bean) objects and their lifecycle is not done by the developer, hence the name is Inversion of Control. (Out of developer control)
+    or
+  * We don't have control in our program to create and manage the object. We only configure the object and the object is created and managed by Spring Container.
+  * This object delegates the job of constructing such dependencies to an IoC container. 
+
+  Two types of IoC:
+  • BeanFactory
+  • ApplicatonContext
+  
+  This means if we need to use IoC container in spring, we need to use BeanFactory (most basic version of IoC) or ApplicationContext (which extends BeanFactory)
+
+  The following are most basic feature of Spring IoC:
+  • Creating Object for us
+  • Managing our objects life cycle
+  • Helping our application to be configureable
+  • Managing dependencies
+
+
+
+
+
+# What is Spring Bean?
+
+  A bean is an object that is managed by Spring IoC container.
+
+
+# What is bean definition?
+
+  A bean definition describes a bean instance. It is a meta data.
+
+  • Creating the bean
+  • Life-cycle details of bean
+
+
+# What is Bean scope? What are its type?
+
+  Spring bean scope allows us to have granular control of the bean instance creation. 
+  Sometimes we want to create bean instance as singleton but some other case we might want it to be created on every request or once in a session.
+
+  The latest version of spring framework has 6 types of spring bean scope, they can be separated into basic scopes and web-aware application context scopes:
+
+  • Singleton (basic scope)
+      Only one instance of the spring bean will be created for the spring container. This is the default bean scope. 
+
+  • Prototype (basic scope)
+      A new instance will be created every time the bean is requested from the Spring container.
+
+  • Request (web-aware)
+      This is same as prototype scope, however it's meant to be used for web application, where a new bean will be created for each HTTP request.
+
+  • Session (web-aware)
+      A new bean will be created for each HTTP session by the container.
+
+  • Application (web-aware)
+      Creates new instance of bean for the lifecycle of ServletContext
+
+  • Websocket (web-ware)
+      Creates bean for particular websocker scope. 
+
+
+
+# What is Servlet Context?
+
+  A ServletContext is an object that contains meta information about your web application.  
+  An object of ServletContext is created by the web container at time of deploying the project. 
+
+  * You can access it via the HttpRequest object like:
+      ServletContext context = request.getSession().getServletContext();
+  
+
+
+
+
+
+
+
+
+
+
+
+      
+
+  
+ 
+
+
+
+
+
+
+
+
+ 

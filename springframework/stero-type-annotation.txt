@@ -1,0 +1,56 @@
+# Spring stero-type annotation
+
+Note: If the article from DAN VEGA is available, please go and read it there, linkn is below. 
+https://www.danvega.dev/blog/2017/03/27/spring-stereotype-annotations/
+
+
+STEREOTYPE & ANNOTATION DEFINED
+Before we dive into what Spring Stereotype annotations are I think it's important for us to understand what these two words mean
+
+Sterotype: a standardized mental picture that is held in common by members of a group and that represents an oversimplified opinion, prejudiced attitude, or uncritical judgment
+Annotation: word annotation as a note or comment to describe something further
+
+
+Now that we understand what these words mean it might give us some insight as to what role they play in our Spring projects.
+When a class is annotated with one of the following Stereotypes Spring will automatically register them in the application context.
+This makes the class available for dependency injection in other classes and this become vital to building out our applications
+
+Annotations denoting the roles of types or methods in the overall architecture (at a conceptual, rather than implementation, level).
+Intended for use by tools and aspects (making an ideal target for pointcuts).
+
+| Annotation | Meaning                                             |
++------------+-----------------------------------------------------+
+| @Component | generic stereotype for any Spring-managed component |
+| @Repository| stereotype for persistence layer                    |
+| @Service   | stereotype for service layer                        |
+| @Controller| stereotype for presentation layer (spring-mvc)      |
+
+Note*
+The @RestController annotation is a specialized version of the @Controller that does more than just mark a component as being
+used for REST requests; thus it is not considered a stereotype annotation, and was declared in a different
+package: org.springframework.web.bind.annotation.
+
+
+Difference between @Component and @Bean Annotations
+
+In Spring, @Component and @Bean. both annotations serve almost the same purpose still they are quite different.
+
+ • @Component is used to auto-detect and auto-configure beans using classpath scanning.
+   There's an implicit one-to-one mapping between the annotated class and the bean (i.e. one bean per class).
+ 
+ • @Bean is used to declare a single bean, rather than automatically letting Spring do it for us.
+
+
+Another big difference is that @Component is a class-level annotation whereas 
+@Bean is a method-level annotation and, by default, the name of the method serves as the bean name.
+
+We cannot create a bean of a class using @Component if the class is outside the spring container whereas 
+we can create a bean of a class using @Bean even if the class is present outside the spring container.
+
+
+
+
+What is Special about the @Component annotation as compared with other stereotype annotations.
+
+<context:component-scan> only scans @Component and does not look for @Controller, @Service and @Repository in general.
+ They are scanned because they themselves are annotated with @Component.

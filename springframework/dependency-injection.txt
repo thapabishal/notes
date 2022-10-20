@@ -1,0 +1,72 @@
+# Dependency Injection
+
+ Dependency injection is a technique where object do not create their dependency instead they declare dependency
+ and it's the external object job or framework to provide the concreate dependency.
+
+ Advantage:
+ ✓ Reduces coupling
+ ✓ Increases cohesion
+ ✓ Increases resuseability
+ ✓ Increase testability, readability and maintainability
+
+ Type of dependency injection:
+ • Constructon injection 
+ • Setter injection
+ • Interface injection
+
+
+
+▶ With dependency injection we can change the behaviour of the object without changing the details of the implementation.
+ 
+Example: We can change the behaviour of the PrinterService supplying different types of printer like InkJetPrinter or LaserPrinter 
+         using constructor injection without changing the PrinterService. Also, if we want to test the PrinterService we can apply the 
+         mock of Printer externally and test the behavior of the printer service.
+
+
+ | interface Printer { void print(); }
+ |
+ | class InkJetPrinter implements Printer {
+ |   void print() { // inject printer }
+ | }
+ |
+ | class LaserPrinter implements Printer {
+ |   void print() { // inject printer }
+ | }
+ |
+ | class PrinterService {
+ |
+ |   private Printer printer;
+ |
+ |   public PrinterService(Printer printer) {
+ |     this.printer = printer;
+ |   }
+ |
+ |   public void printSomeDocument() {
+ |     printer.print(); 
+ |   }
+ |   
+ |  } 
+
+
+
+▶ With spring dependency above ↑ example would look like this
+ 
+ |  @Service
+ |  class PrinterService {
+ |   
+ |   @Autowired
+ |   private Printer printer;
+ | 
+ |   public void printSomeDocument() {
+ |     printer.print();
+ |   }
+ | 
+ |   }
+  
+
+Note: With use of anotation @Service, @Autowire and component-scan feature of spring framework, spring will automatically scan and create bean(instance) 
+      along with its required dependency.
+
+
+
+

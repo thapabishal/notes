@@ -1,0 +1,34 @@
+# What is a software pattern ?
+
+ A Software design pattern is a resuable solution to often, commonly occuring problem in software design. 
+ It is high level description on how to solve the problem. Design patterns are best practices to solve common problems.
+
+▶ Creational Pattern: pattern provides various object creation mechanisms
+  • Factory Method
+  • Builder
+  • Singleton 
+  • Prototype
+  • Abstract Factory
+
+▶ Structural Pattern: pattern explains how to assemble objects and classes into large structure, while keeping structure flexiable and efficient
+  • Proxy
+  • Facade
+  • Decorator
+  • Adapter
+  • Bridge
+  • Composite
+  • Flyweight
+
+
+▶ Behavioral Pattern: pattern which is concerned with assignment of responsibility between objects
+  • Chain of responsibility 
+  • Command
+  • Template method
+  • Strategy
+  • Mediator
+  • Observer
+  • State
+  • Strategy
+
+
+
