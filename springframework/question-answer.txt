@@ -43,7 +43,7 @@
 
 # What is Inversion of Control? Feature of Spring IoC?
  
-  Spring IoC creates object, confiures and assemble dependencies, managed bean life cycle and container uses Dependency Injection (DI) to manage the 
+  Spring IoC creates object, configures and assemble dependencies, managed bean life cycle and container uses Dependency Injection (DI) to manage the 
   component. Spring IoC gets information about objects from configuration file (XML) or Java Code or Java Annotation. 
   * Since controlling of Java (bean) objects and their lifecycle is not done by the developer, hence the name is Inversion of Control. (Out of developer control)
     or
