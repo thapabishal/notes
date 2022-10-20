@@ -1,6 +1,6 @@
 # Spring stero-type annotation
 
-Note: If the article from DAN VEGA is available, please go and read it there, linkn is below. 
+Note: If the article from DAN VEGA is available, please go and read it there, link is below. 
 https://www.danvega.dev/blog/2017/03/27/spring-stereotype-annotations/
 
 
