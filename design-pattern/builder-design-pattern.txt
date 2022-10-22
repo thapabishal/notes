@@ -1,0 +1,31 @@
+# Builder Pattern is a creational pattern. It focus on building object in step by step approach. It removes code duplication with default construction.
+  Builder pattern respects Single Responsibility Principle.
+
+ Builder patterns addresses the construction of complex object in step by step which returns final object.
+ The process of constructing an object should be generic so that it can be used to create different representations of the same object.  
+
+# How we can use Builder pattern to optimize  part of the code to look better and write less to achieve the same result ?
+
+Example: In the below example, even though we want to change only one property we neede to provide the all of the other property.
+         we can see that there are code duplication too.
+
+  |  TextRenderer textRender = new TextRenderer(new DefaultFont(), new DefaultColor(), new DefaultFontWeight());
+  |  TextRenderer textRender = new TextRenderer(new DefaultFont(), new RedColor(), new DefaultFontWeight());
+  |  TextRenderer textRender = new TextRenderer(new DefaultFont(), new YellowColor(), new BoldFontWeight());
+
+
+Lets fix it with Builder Pattern:
+
+Example: In the below code we have put all the default (boiler) plate code in the builder and we can customize the construction of the object
+         into a set of steps. 
+
+  |  TextRenderer textRender = TextRendereBuilder.build();
+  |  
+  |  TextRenderer textRender = TextRendereBuilder.withNewFontColor(new RedColor())
+  |                                              .build();
+  |  
+  |  TextRenderer textRender = TextRendereBuilder.withNewFontWeight(new BoldFontWeight())
+                                            .build();
+
+  • We customize the construction of object with steps providing different implementation.
+  • The good part is we can only call those steps that are necessary. 
