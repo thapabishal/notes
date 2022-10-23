@@ -1,0 +1,3 @@
+
+Domain Driven Design - Eric Evans
+Effective Java - Joshua Bloch

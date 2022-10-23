@@ -1,0 +1,89 @@
+# Using Records Types To Build Better Domain Model - Henning Schwenter
+
+Notes: ▶ Software is build for business people that means we need to understand the work of user. 
+       ▶ Software is rootly connected to domain.
+       ▶ Programming is Model building.
+     
+
+# Basic idea of object oriented.
+  ▶ Objects from real world turns into objects in software.
+  ▶ Actions from real word turns into operations (methods) in software.
+
+    
+  Figure: Banking Domain Story
+      
+                         01                                                                               +---------+
+                        OPENS                  +---------+     with            +-------+                  |         |
+             +-------------------------------->| Account +-------------------->| IBAN  | ---------------> |  Bank   |
+             |                                 +---------+                     +-------+                  |         |
+             |                                                                                            +----+----+
+             |                                                                                                 |
+             |                                                                                                 |
+             |                                                                                                 |
+             |                                                                                                 |
+             |                                                                                                 |  03
+      +------+------+            02                                                                            | PAYS
+      |             |          DEPOSITS       +------------+    onto       +---------+                         |
+      |  Customer   +------------------------>|    Amount  +-------------->| Account |                         |
+      |             |                         +------------+               +---------+                         |
+      +-------+-----+  <-                                                                                      |
+              |          |                                                                                     |
+              |          |                                                                                     |
+              |          |                                                                                     v
+              |          |                                                  +---------+                      +--------+
+              |          +------------------------------------------------- | Account | <------------------- |Interest|
+              |                                                             +---------+         into         +--------+
+              |
+              |
+              |              04
+              |           WITHDRAWS            +-------------+   from       +---------+
+              +------------------------------> |    Amount   | -----------> | Account |
+                                               +-------------+              +---------+
+      
+  
+
+
+  From the above diagram, work object like Customer, Bank is going to be class. Activity like open, withdraw, pay is going to be a method
+  but what about IBAN, Amount, Interest are they going to be a class? wait they are not real world object.Also when we look into real world everything is not object. 
+
+  Thats where, Domain Driven Design (Eric Evans) comes into place. Is everything object, do we have different kinds of object?
+  
+  We have things like customer, bank  and value like amount in bank, account in bank, IBAN from bank. Things are object but what about the value. 
+  
+  Before what value is, lets again dig into object. What is object?
+  Simple, • Object is typically a thing
+          • Object has an identity  
+             note: when we have two object of same class that are equal that doesn't mean they are identical
+          • Object they exist in time meaning it has lifecycle
+               -> object is created 
+               -> object state gets changed if mutable
+               -> object is destroyed 
+   
+  So, What is value? 
+      • Value is not a thing
+      • Value has no identity
+      • Value is immutable (no state changing methods)
+    
+  Object types that behave like value types  is value-based class e.g (String in Java, LocalDateTime etc) and from the above domain account, iban, amount, interest are value-based class.
+
+
+* Record saves us from boiler plate codes and it's eaiser to write better domain model.
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
