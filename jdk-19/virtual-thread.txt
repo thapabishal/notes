@@ -1,0 +1,138 @@
+# Java Virtual Thread - 19
+
+It is the new notion added in the concurrent programming field. Two new thing in concurrent programing:
+ • Virtual Thread
+ • Structured concurrent
+
+
+# Virtual Thread
+JDK Enhancement Proposal (JEP): https://openjdk.org/jeps/425
+
+Virtual thread are lightweight threads that "dramatically" reduces the effort of writing, maintaining and observing
+high-throughput concurrent application.
+
+
+Three Goals of Virtual Thread:
+ ▶ Enable server applications written in the simple thread-per-request style to scale with near-optimal hardware utilization.
+   
+    Q: What is thread-per-request style?
+       Well, for an HTTP server, it means that each HTTP request is handled by its own thread.
+             for a relation database server, it means that each SQL transaction is also handled by its own thread.
+ 
+    So, One request = one transcation = one thread
+ 
+    Q: What is the cost of thread-per-request model?
+       To understand cost of thread-per-request model, we need to understand what is the cost of thread in Java.
+
+       A Java thread, as created in the wrapper on a platform thread, also called operating system thread.
+       Things to know about platform thread, first platform thread store its call stack in memeory and for that
+       20MB are reserved upfront in memory. Second it is a system resource. It takes about 1ms to launch a platform
+       thread. 20MB of memeory and 1ms to load is rather expensive resource. 
+
+       How to optimize hardware utilization with platform thread ?
+       Suppose you have 16GB of your application. 16GB divided by 20MB for a thread, you have room for 800 threads on such a machine.
+       
+       Example: It takes (500ns + 500ns) 1s for request and response preparation and 100s to get the response. 
+                so for 100s thread is setting there doing nothing.
+         ┌──────────────────────┐   ┌───────────────────────────────────────────────────┐  ┌─────────────────────┐
+         │ Request Preparation  │   │                  Network Access                   │  │ Response Processing │
+         │                      │   │                                                   │  │                     │
+         │ <──────────────────> │   │ <───────────────────────────────────────────────> │  │ <─────────────────> │
+         │      500ns           │   │                      100s                         │  │       500ns         │
+         └──────────────────────┘   └───────────────────────────────────────────────────┘  └─────────────────────┘
+        
+        If you have 800 such thread, your CPU will be used 0.8%. In such case, it means wit 16GB of RAM we could use only 0.8% of CPU
+        If we double RAM to 32GB then we could only use 1.3%, if we want CPU usage 90%, we need 90,000 thread, as one platform thread
+        takes 1ms to launch and 20MB of RAM, it will take (1ms x 90,00) 90s to launch and it will consume 1.8TB of memory.
+
+        So clearly platform thread are far too expensive to scale with optimal hardware utilization and another model of thread is needed there.
+        and this first goal is very ambitious.
+  
+ ▶ Enable existing code that uses the java.lang.Thread API to adopt virtual threads with minimal changes.
+ 
+   This means, everything that could be done with classic thread, should be able to the same with virtual thread.
+   The key point preceding goal covers are:
+     1) Virtual thread can run any Java code 
+     2) There is no new learning curves
+     3) We do need to unlearn certain ideas like
+         • Virtual thread are 1000 time cheaper than classical thread platform thread.
+         • Blocking a virtual thread is also cheap, so it is usless to trying to avoid blocking a virtual thread.
+           that is good news because writing blocking code is eaiser than writing asynchronous non-blocking code
+
+   Q: With virtual thread, Is it a good idea to pool virtual thread?
+      No, it is not good idea to pool virtual thread, it's wasting time.
+  
+   Q: Does it make executor service useless?
+      Yes and no. Usally executor service are used to control the number of platform thread used by your application.
+      This usecase is useless now but it can be convenient way to create threads with executor service. In fact, Executor factory class
+      has a method to create an ExecutorService that creates virtual thread on demand for each task submitted.
+
+     @PreviewFeature(feature = PreviewFeature.Feature.VIRTUAL_THREADS) 
+     public static ExecutorService newVirtualThreadPerTaskExecutor() {
+         ...
+     } 
+  
+     ExecutorFactory class which has the above method can be the good entry point to test the virtual thread.
+
+     ExecutorService can also be used in another context, it can be used to make sure that no more than, let's say 10 threads are querying
+     database at a given time.
+
+     Suppose you have several hundred of quries to launch, what we can do is create a ExecutorService with 10 threads
+         
+      |    ExecutorService executorService = Executors.newFixedThreadPool(10);
+      |    queries.forEach(executorService::submit);
+
+     and submit the hundred of quries to the executor service and it will nicely send them 10 at a time. Pooling virtual thread doesn't make
+     sense, so creating thread pool for such a task would also be waste of time. Instead, we can do is choose a Semaphore, it will do exactly the same.
+
+      |     Semaphore semaphore = new Semaphore(10);
+      |     for (Query query: queries) {
+      |         semapore.acquire();
+      |         try {
+      |            query.run();
+      |         } finally {
+      |            semaphore.release();
+      |         }
+      |      }  
+
+
+
+
+
+ ▶ Enable easy troubleshooting, debugging, and profiling of virtual threads with existing JDK tools.
+
+
+
+
+
+
+Note: Virtual thread is still running in top of a platform thread. There is stil platform thread underneath.
+      The trick is, this virtual thread can be detached from it's platform thread so this platform so that 
+      this platform run another virtual thread.
+
+      Q: When would the virtual thread detached from platform thread?
+         Virtual thread can be detached from platform thread as soon as it is blocking. It could be blocked on I/O operation or 
+         on a synchronization operation or it should be put to slee().
+        
+     Now the thing is, for the moment, if a virtual thread is executing some code inside  a synchoronized block, it cannot be detached 
+     from its platform thread. So during the time it is running synchronied block of code, it blocks platform thread. If the time is short
+     that is ok, there is no need to panic and nothing to do prevent that. If the time is long then it's not a great situation. You need to 
+     do something. You can prevent this situation from happening by simply replacing the call to synchronized(..) with reentrant lock.
+
+     
+      |  synchronized (key) {
+      |     someLongOperation();
+      |  } 
+
+   
+      |  Lock lock = ReentrandLock();
+      |  lock.lock();
+      |  try {
+      |     someLongOperation();
+      |  } finally {
+      |    lock.unlock();
+      |  }  
+
+
+    Also by the time virtual thread becomes final release this problem can also be solved.
+
