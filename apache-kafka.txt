@@ -23,6 +23,8 @@ Kafka replicates log partitions from many hosts. Developers and users contribute
 activity tracking, log aggregation, and commit logs, Kafka is employed. Although Kafka can be used as a database, it lacks a data schema and indexes
 
 
+      Figure: Apache Kafka Basic Architecture
+
          
                                           Kafka Ecosystem
                                          +---------------------------+
@@ -50,3 +52,16 @@ activity tracking, log aggregation, and commit logs, Kafka is employed. Although
                                          | |     ...........     |   |
                                          | +---------------------+   |
                                          +---------------------------+
+
+## Kafka Core Concepts
+
+Kafka Cluster: In 
+
+
+
+
+
+
+
+
+ 
