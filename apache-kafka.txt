@@ -55,11 +55,43 @@ activity tracking, log aggregation, and commit logs, Kafka is employed. Although
 
 ## Kafka Core Concepts
 
-Kafka Cluster: In 
+Kafka Cluster: In distributed computing system, a cluster is a collection of computers working together to achieve a share goal. 
+               Kafka with more than one broker is called Apache Kafka. A Kafka cluster is a system that consists of several Brokers, Topics and Partition. 
+               The keyobjective is to distribute workloads equally among replicas and partitions.
 
 
+Kafka Broker: The broker is the kafka server. It's just a meaningful name given to kafka server as all kafka does is to act as message broker between producer
+              and consumer.
 
+Producer: Producer is an application that sends messages to the Kafka server. It does not send message directly to recipient but to a message broker.
 
+Consumer: Consumer is an application that reads the messages from the Kafka server.
+
+Kafka Topic: Similar to how databases have tables to organize and segment datasets, Kafka uses the concept of topics to organize related messages.
+             A topic is identified by its name. For example, we may have a topic called logs that may contain log messages from our application, and another topic 
+             called purchases that may contain purchase data from our application as it happens.
+                            
+                            +--Kafka Cluster-------------+
+                            |                            |
+                            |     +-----------------+    |
+                            |     |       logs      |    |
+                            |     +-----------------+    |
+                            |                            |
+                            |     +-----------------+    |
+                            |     |    purchases    |    |
+                            |     +-----------------+    |
+                            |                            |
+                            |     +-----------------+    |
+                            |     |  twitter tweets |    |
+                            |     +-----------------+    |
+                            |                            |
+                            |     +-----------------+    |
+                            |     |  truck gps      |    |
+                            |     +-----------------+    |
+                            +----------------------------+
+        
+             Note: Unlike database tables, Kafka topics are not query-able. Instead, we have to create Kafka producers to send data to the topic and Kafka 
+                   consumers to read the data from the topic in order.
 
 
 

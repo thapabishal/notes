@@ -1,0 +1,17 @@
+# Interface
+
+OOP: Interface is a description of actions of an object. It is a way to enforce actions on object that implements the interface.
+
+
+# What are advantage of using interface in Java?
+ ▶ Allows decoupling between contract and implementation
+ ▶ Increases interchangeability
+ ▶ Increaes testability
+
+# What are advantage of using interfaces in Spring?
+
+ ▶ Allows use of JDK Dynamic proxy
+ ▶ Allows implementation hiding
+ ▶ Allows eaisly switch beans
+
+
