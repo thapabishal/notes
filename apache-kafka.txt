@@ -49,4 +49,4 @@ activity tracking, log aggregation, and commit logs, Kafka is employed. Although
                                          | |     Zoo Keeper      |   |
                                          | |     ...........     |   |
                                          | +---------------------+   |
-                                       +---------------------------+
+                                         +---------------------------+
