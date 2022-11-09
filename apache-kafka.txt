@@ -1,0 +1,52 @@
+# Apache Kafka
+
+Apache Kafka is a messaging system which enables communication between producer application and
+consumer application using message-based on topics.
+
+It is distriubted messaging system which is fast, scalable, fault-tolerant messaging system which means it is highly available and resillient to 
+node failures and supports automatic recovery. 
+
+
+It is designed to handle data streams from multiple sources and deliver them to multiple consumers.
+
+Kafka can process a large amount of data in a short amount of time. It also has low latency, making it possible to process data in real-time.
+Although Apache Kafka is written in Scala and Java, it may be used with a variety of different programming languages.
+
+Traditional message queues, like RabbitMQ, are not the same as Kafka. RabbitMQ eliminates messages immediately after the consumer confirms them, whereas Kafka keeps them 
+for a period of time (default is 7 days) after they've been received.
+
+RabbitMQ also sends messages to consumers and monitors their load. It determines how many messages each consumer should be processing at any one time.
+On the other hand, Consumers can retrieve messages from Kafka by pulling. It is built to be scalable horizontally by adding more nodes.
+
+It is used for fault-tolerant storage as well as publishing and subscribing to a stream of records. The programs are intended to process timing and consumption records.
+Kafka replicates log partitions from many hosts. Developers and users contribute coding updates, which it keeps, reads, and analyses in real-time. For messaging, website 
+activity tracking, log aggregation, and commit logs, Kafka is employed. Although Kafka can be used as a database, it lacks a data schema and indexes
+
+
+         
+                                          Kafka Ecosystem
+                                         +---------------------------+
+                                         |                           |
+                                         |       Kafka Cluster       |             +----------------+
+                                         |   ......................  |             |                |
+         +------------------+            |   .  +-------------+   .  |             |  +----------+  |
+         |                  |            |   .  |   Broker 1  |   .  |             |  |Consumer 1|  |
+         |   +----------+   |            |   .  +-------------+   .  |             |  +----------+  |
+         |   |Producer 1|   |   push     |   .                    .  |     pull    |                |
+         |   +----------+   | messages   |   .  +-------------+   .  |   messages  |  +----------+  |
+         |                  +----------> |   .  |   Broker 2  |   .  | <-----------+  |Consumer 2|  |
+         |   +----------+   |            |   .  +-------------+   .  |             |  +----------+  |
+         |   |Producer 2|   |<--  - -    |   .                    .  |   - -  - -->|                |
+         |   +----------+   |        \   |   .  +-------------+   .  |  /          +----------------+
+         |                  |         \  |   .  |   Broker 3  |   .  | /
+         +------------------+     Get  \ |   .  +-------------+   .  |/   update
+                                 Kafka  \|   ......................  |    offset
+                               Broker Id |             |            /|
+                                         |\            |           / |
+                                         | \           |          /  |
+                                         |  \          v         /   |
+                                         | +---------------------+   |
+                                         | |     Zoo Keeper      |   |
+                                         | |     ...........     |   |
+                                         | +---------------------+   |
+                                       +---------------------------+
